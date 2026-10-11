@@ -65,7 +65,7 @@ env:
 jobs:
   admission:
     if: github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-24.04
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
     timeout-minutes: 3
     permissions:
       contents: read
@@ -102,7 +102,7 @@ jobs:
     # Pull requests only validate the artifact build; real Testbox leases
     # arrive via dispatch. Hosted PR runs keep this landing gate satisfiable
     # during Blacksmith outages (mirrors ci-check-testbox.yml).
-    runs-on: ${{ github.event_name == 'pull_request' && 'ubuntu-24.04' || needs.admission.outputs.runner }}
+    runs-on: ${{ github.event_name == 'pull_request' && 'ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true' || needs.admission.outputs.runner }}
     timeout-minutes: ${{ fromJSON(needs.admission.outputs.minutes || '35') }}
     steps:
       # Testbox lifecycle actions require Blacksmith VM metadata; PRs validate the build only.
