@@ -1,0 +1,23 @@
+name: Ravion probe
+on:
+  push:
+    branches: [bench/probe]
+jobs:
+  probe:
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
+    steps:
+      - run: |
+          set -x
+          id; uname -a; cat /etc/os-release | head -3
+          ps -p 1 -o comm=; ps -ef | head -20
+          sudo -n true && echo SUDO_OK
+          sudo -n systemctl is-active systemd-logind.service || true
+          ls -la /run/systemd || true
+          mount | grep cgroup; cat /sys/fs/cgroup/cgroup.controllers || true
+          cat /proc/self/cgroup
+          sudo -n loginctl enable-linger "$(id -un)" || true
+          sudo -n systemctl start "user@$(id -u).service" || true
+          loginctl show-user "$(id -un)" || true
+          systemctl --user show-environment | head -3 || true
+          cat /sys/fs/cgroup/user.slice/cgroup.subtree_control 2>/dev/null || true
+          systemd-run --user --scope --quiet --property=MemoryMax=67108864 -- bash -c 'cat /proc/self/cgroup; g=$(awk -F: "\$1==0{print \$3}" /proc/self/cgroup); cat /sys/fs/cgroup$g/memory.max' || true
