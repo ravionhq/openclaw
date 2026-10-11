@@ -7,18 +7,18 @@ self-hosted-runner:
     - xcode-27
     - xcode-27-xlarge
     # Blacksmith CI runners
-    - blacksmith-4vcpu-ubuntu-2404
-    - blacksmith-8vcpu-ubuntu-2404
-    - blacksmith-8vcpu-windows-2025
-    - blacksmith-16vcpu-ubuntu-2404
-    - blacksmith-32vcpu-ubuntu-2404
-    - blacksmith-16vcpu-windows-2025
-    - blacksmith-32vcpu-windows-2025
-    - blacksmith-16vcpu-ubuntu-2404-arm
+    - ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
+    - ravion/ee=openclaw-bench/type=sandbox/cpu=8/memory=32/interruptible=true
+    - windows-2025
+    - ravion/ee=openclaw-bench/type=sandbox/cpu=16/memory=64/interruptible=true
+    - ravion/ee=openclaw-bench/type=sandbox/cpu=32/memory=128/interruptible=true
+    - windows-2025
+    - windows-2025
+    - ravion/ee=openclaw-bench/type=sandbox/cpu=16/memory=64/interruptible=true
     - blacksmith-6vcpu-macos-latest
     - blacksmith-12vcpu-macos-latest
-    - blacksmith-6vcpu-macos-15
-    - blacksmith-12vcpu-macos-15
+    - macos-15
+    - macos-15
     - blacksmith-6vcpu-macos-26
     - blacksmith-12vcpu-macos-26
 
