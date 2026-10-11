@@ -32,7 +32,7 @@ jobs:
   release:
     name: Prepare and upload Android release
     if: >-
-      github.ref == 'refs/heads/main' && github.repository == 'openclaw/openclaw' &&
+      github.ref == 'refs/heads/main' && github.repository == 'ravionhq/openclaw' &&
       ((github.event_name == 'schedule' && vars.ANDROID_INTERNAL_ENABLED == 'true') ||
       (github.event_name == 'workflow_dispatch' &&
       (inputs.operation == 'release' || inputs.operation == 'internal')))
