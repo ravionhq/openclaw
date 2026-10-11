@@ -23,7 +23,7 @@ concurrency:
 jobs:
   validate_request:
     name: Validate release request
-    runs-on: ubuntu-22.04
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
     timeout-minutes: 5
     steps:
       - name: Validate tag input format
