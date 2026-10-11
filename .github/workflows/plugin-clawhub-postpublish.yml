@@ -19,8 +19,8 @@ env:
 jobs:
   verify:
     if: >-
-      github.repository == 'openclaw/openclaw' &&
-      github.event.workflow_run.repository.full_name == 'openclaw/openclaw' &&
+      github.repository == 'ravionhq/openclaw' &&
+      github.event.workflow_run.repository.full_name == 'ravionhq/openclaw' &&
       github.event.workflow_run.event == 'workflow_dispatch' &&
       github.event.workflow_run.conclusion == 'success'
     runs-on: ${{ vars.OPENCLAW_RELEASE_RUNNER_GROUP != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(vars.OPENCLAW_RELEASE_RUNNER_GROUP), toJSON('ubuntu-latest'))) || ('ubuntu-latest') }}
