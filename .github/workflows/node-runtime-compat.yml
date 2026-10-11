@@ -12,7 +12,7 @@ permissions:
 jobs:
   compat:
     if: github.repository == 'ravionhq/openclaw' || github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-24.04
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
     timeout-minutes: 60
     steps:
       - name: Checkout repository
