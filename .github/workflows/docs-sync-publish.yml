@@ -119,7 +119,7 @@ jobs:
       # This is a disposable compiler artifact, not a dependency/runtime cache.
       # The combined action saves only after a successful trusted-main job.
       - name: Cache successful docs validation
-        if: env.OPENCLAW_DOCS_SYNC_TOKEN != '' && github.repository == 'openclaw/openclaw' && github.ref == 'refs/heads/main'
+        if: env.OPENCLAW_DOCS_SYNC_TOKEN != '' && github.repository == 'ravionhq/openclaw' && github.ref == 'refs/heads/main'
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: .artifacts/docs-mdx-cache.json
