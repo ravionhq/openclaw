@@ -20,8 +20,8 @@ permissions:
 jobs:
   android:
     name: Critical Security (android)
-    if: (github.event_name != 'schedule' || github.repository == 'openclaw/openclaw')
-    runs-on: blacksmith-8vcpu-ubuntu-2404
+    if: (github.event_name != 'schedule' || github.repository == 'ravionhq/openclaw')
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=8/memory=32/interruptible=true
     timeout-minutes: 45
     steps:
       - name: Checkout

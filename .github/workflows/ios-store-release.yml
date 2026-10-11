@@ -32,7 +32,7 @@ env:
 jobs:
   screenshots:
     name: Capture release screenshots without uploading
-    if: github.event_name == 'workflow_dispatch' && inputs.operation == 'screenshots' && github.repository == 'openclaw/openclaw'
+    if: github.event_name == 'workflow_dispatch' && inputs.operation == 'screenshots' && github.repository == 'ravionhq/openclaw'
     permissions:
       contents: read
     runs-on: xcode-27-xlarge
@@ -105,7 +105,7 @@ jobs:
 
   qualify:
     if: >-
-      github.ref == 'refs/heads/main' && github.repository == 'openclaw/openclaw' &&
+      github.ref == 'refs/heads/main' && github.repository == 'ravionhq/openclaw' &&
       github.event_name == 'workflow_dispatch' && inputs.operation == 'release'
     permissions:
       actions: read
@@ -122,7 +122,7 @@ jobs:
     needs: qualify
     if: >-
       !cancelled() &&
-      github.ref == 'refs/heads/main' && github.repository == 'openclaw/openclaw' &&
+      github.ref == 'refs/heads/main' && github.repository == 'ravionhq/openclaw' &&
       ((github.event_name == 'schedule' && vars.IOS_TESTFLIGHT_ENABLED == 'true') ||
       (github.event_name == 'workflow_dispatch' &&
       (inputs.operation == 'testflight' || (inputs.operation == 'release' && needs.qualify.result == 'success'))))
