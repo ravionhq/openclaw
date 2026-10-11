@@ -15,7 +15,7 @@ concurrency:
 jobs:
   audit:
     if: github.repository == 'ravionhq/openclaw'
-    runs-on: ubuntu-24.04
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
     timeout-minutes: 45
     steps:
       - name: Checkout

@@ -126,7 +126,7 @@ jobs:
 
   validate_publish_request:
     if: ${{ !inputs.preflight_only }}
-    runs-on: ${{ vars.OPENCLAW_RELEASE_RUNNER_GROUP != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(vars.OPENCLAW_RELEASE_RUNNER_GROUP), toJSON('ubuntu-latest'))) || ('ubuntu-latest') }}
+    runs-on: ${{ vars.OPENCLAW_RELEASE_RUNNER_GROUP != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(vars.OPENCLAW_RELEASE_RUNNER_GROUP), toJSON('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true'))) || ('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true') }}
     permissions:
       actions: read
       attestations: read
@@ -348,7 +348,7 @@ jobs:
   approve_openclaw_npm_release:
     needs: validate_publish_request
     if: ${{ !inputs.preflight_only && needs.validate_publish_request.result == 'success' && needs.validate_publish_request.outputs.parent_approval != 'receipt' }}
-    runs-on: ubuntu-latest
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
     environment: npm-release
     permissions:
       contents: read
@@ -361,7 +361,7 @@ jobs:
     # npm trusted publishing + provenance requires this to stay on ubuntu-latest.
     needs: [validate_publish_request, approve_openclaw_npm_release]
     if: ${{ always() && !cancelled() && !inputs.preflight_only && needs.validate_publish_request.result == 'success' && (needs.approve_openclaw_npm_release.result == 'success' || (needs.approve_openclaw_npm_release.result == 'skipped' && needs.validate_publish_request.outputs.parent_approval == 'receipt')) }}
-    runs-on: ubuntu-latest
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
     environment: npm-publish
     permissions:
       actions: read

@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   validate-target:
-    runs-on: ubuntu-24.04
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
     timeout-minutes: 5
     permissions:
       contents: read
@@ -87,7 +87,7 @@ jobs:
 
   diagnose:
     needs: validate-target
-    runs-on: ubuntu-24.04
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
     timeout-minutes: 25
     permissions:
       contents: read
