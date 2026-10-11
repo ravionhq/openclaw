@@ -54,7 +54,7 @@ env:
 jobs:
   publish_signed_android_apk:
     name: Publish signed Android APK
-    runs-on: ubuntu-latest
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
     timeout-minutes: 45
     environment: android-release
     env:
