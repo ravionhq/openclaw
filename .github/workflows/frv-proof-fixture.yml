@@ -21,7 +21,7 @@ permissions: {}
 jobs:
   fixture:
     name: Fail once, then pass
-    runs-on: ubuntu-24.04
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
     timeout-minutes: 5
     permissions: {}
     steps:
