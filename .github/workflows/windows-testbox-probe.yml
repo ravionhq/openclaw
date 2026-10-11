@@ -11,11 +11,11 @@ on:
       runner_label:
         description: "Runner for Windows/WSL probes and headless CI"
         required: false
-        default: "blacksmith-16vcpu-windows-2025"
+        default: "windows-2025"
         type: choice
         options:
-          - blacksmith-16vcpu-windows-2025
-          - blacksmith-32vcpu-windows-2025
+          - windows-2025
+          - windows-2025
           - windows-2025
       keepalive_minutes:
         description: "Minutes to keep the Windows runner alive for SSH inspection"

@@ -62,7 +62,7 @@ concurrency:
 jobs:
   resolve-base:
     if: >-
-      github.repository == 'openclaw/openclaw' &&
+      github.repository == 'ravionhq/openclaw' &&
       (github.event_name != 'workflow_dispatch' || github.ref == 'refs/heads/main')
     runs-on: ubuntu-latest
     outputs:

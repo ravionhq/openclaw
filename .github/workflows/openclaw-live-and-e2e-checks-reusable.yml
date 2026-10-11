@@ -631,7 +631,7 @@ env:
 
 jobs:
   validate_selected_ref:
-    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(!inputs.use_github_hosted_runners && github.repository == 'openclaw/openclaw' && vars.OPENCLAW_CI_RUNNER_BACKEND == 'hybrid' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-24.04'))) || (!inputs.use_github_hosted_runners && github.repository == 'openclaw/openclaw' && vars.OPENCLAW_CI_RUNNER_BACKEND == 'hybrid' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-24.04') }}
+    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(!inputs.use_github_hosted_runners && github.repository == 'ravionhq/openclaw' && vars.OPENCLAW_CI_RUNNER_BACKEND == 'hybrid' && 'ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true' || 'ubuntu-24.04'))) || (!inputs.use_github_hosted_runners && github.repository == 'ravionhq/openclaw' && vars.OPENCLAW_CI_RUNNER_BACKEND == 'hybrid' && 'ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true' || 'ubuntu-24.04') }}
     timeout-minutes: 30
     outputs:
       test_bun_artifact_id: ${{ steps.test_bun_artifact.outputs.artifact-id }}
@@ -1269,7 +1269,7 @@ jobs:
     name: ${{ inputs.test_runtime == 'bun' && 'validate_release_live_cache (Bun advisory)' || 'validate_release_live_cache' }}
     needs: validate_selected_ref
     if: (!inputs.prepare_only) && inputs.include_live_suites && !inputs.live_models_only && (inputs.live_suite_filter == '' || inputs.live_suite_filter == 'live-cache')
-    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'blacksmith-8vcpu-ubuntu-2404'))) || (inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'blacksmith-8vcpu-ubuntu-2404') }}
+    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=8/memory=32/interruptible=true'))) || (inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=8/memory=32/interruptible=true') }}
     timeout-minutes: 20
     env:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -1379,7 +1379,7 @@ jobs:
     name: ${{ inputs.test_runtime == 'bun' && 'validate_special_e2e (Bun advisory)' || 'validate_special_e2e' }}
     needs: validate_selected_ref
     if: (!inputs.prepare_only) && inputs.include_repo_e2e && (inputs.live_suite_filter == '' || inputs.live_suite_filter == 'openshell-e2e')
-    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'blacksmith-32vcpu-ubuntu-2404'))) || (inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'blacksmith-32vcpu-ubuntu-2404') }}
+    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=32/memory=128/interruptible=true'))) || (inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=32/memory=128/interruptible=true') }}
     timeout-minutes: ${{ matrix.timeout_minutes }}
     strategy:
       fail-fast: false
@@ -1676,7 +1676,7 @@ jobs:
     needs: [validate_selected_ref, prepare_docker_e2e_image, plan_release_workflow_matrices]
     if: (!inputs.prepare_only) && inputs.include_release_path_suites && inputs.docker_lanes == '' && needs.plan_release_workflow_matrices.outputs.docker_e2e_count != '0'
     name: Docker E2E (${{ matrix.label }})
-    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'blacksmith-32vcpu-ubuntu-2404'))) || (inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'blacksmith-32vcpu-ubuntu-2404') }}
+    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=32/memory=128/interruptible=true'))) || (inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=32/memory=128/interruptible=true') }}
     timeout-minutes: ${{ matrix.timeout_minutes }}
     strategy:
       fail-fast: false
@@ -2034,7 +2034,7 @@ jobs:
   plan_docker_lane_groups:
     needs: validate_selected_ref
     if: (!inputs.prepare_only) && inputs.docker_lanes != ''
-    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'blacksmith-4vcpu-ubuntu-2404'))) || (inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'blacksmith-4vcpu-ubuntu-2404') }}
+    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true'))) || (inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true') }}
     timeout-minutes: 90
     outputs:
       groups_json: ${{ steps.groups.outputs.groups_json }}
@@ -2085,7 +2085,7 @@ jobs:
     needs: [validate_selected_ref, prepare_docker_e2e_image, plan_docker_lane_groups]
     if: (!inputs.prepare_only) && inputs.docker_lanes != '' && needs.plan_docker_lane_groups.outputs.groups_json != '[]'
     name: Docker E2E targeted lanes (${{ matrix.group.label }})
-    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'blacksmith-32vcpu-ubuntu-2404'))) || (inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'blacksmith-32vcpu-ubuntu-2404') }}
+    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=32/memory=128/interruptible=true'))) || (inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=32/memory=128/interruptible=true') }}
     timeout-minutes: ${{ matrix.group.timeout_minutes || 60 }}
     strategy:
       fail-fast: false
@@ -2384,7 +2384,7 @@ jobs:
     needs: [validate_selected_ref, prepare_docker_e2e_image]
     if: (!inputs.prepare_only) && inputs.include_openwebui && inputs.docker_lanes == '' && (inputs.release_test_profile == 'stable' || inputs.release_test_profile == 'full')
     name: Docker E2E (openwebui)
-    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON((vars.OPENCLAW_CI_RUNNER_BACKEND == 'github' || inputs.use_github_hosted_runners) && 'ubuntu-24.04' || 'blacksmith-32vcpu-ubuntu-2404'))) || ((vars.OPENCLAW_CI_RUNNER_BACKEND == 'github' || inputs.use_github_hosted_runners) && 'ubuntu-24.04' || 'blacksmith-32vcpu-ubuntu-2404') }}
+    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON((vars.OPENCLAW_CI_RUNNER_BACKEND == 'github' || inputs.use_github_hosted_runners) && 'ubuntu-24.04' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=32/memory=128/interruptible=true'))) || ((vars.OPENCLAW_CI_RUNNER_BACKEND == 'github' || inputs.use_github_hosted_runners) && 'ubuntu-24.04' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=32/memory=128/interruptible=true') }}
     timeout-minutes: 60
     env:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -2531,7 +2531,7 @@ jobs:
     name: Prepare shared Docker E2E image
     needs: validate_selected_ref
     if: inputs.prepare_only || inputs.include_release_path_suites || inputs.include_openwebui || inputs.docker_lanes != ''
-    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'blacksmith-32vcpu-ubuntu-2404'))) || (inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'blacksmith-32vcpu-ubuntu-2404') }}
+    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=32/memory=128/interruptible=true'))) || (inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=32/memory=128/interruptible=true') }}
     timeout-minutes: ${{ inputs.release_test_profile == 'full' && 90 || 60 }}
     permissions:
       actions: read
@@ -3401,7 +3401,7 @@ jobs:
     name: Bind full release candidate evidence
     needs: [validate_selected_ref, prepare_docker_e2e_image]
     if: inputs.emit_candidate_evidence && needs.prepare_docker_e2e_image.result == 'success'
-    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(!inputs.use_github_hosted_runners && github.repository == 'openclaw/openclaw' && vars.OPENCLAW_CI_RUNNER_BACKEND == 'hybrid' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-24.04'))) || (!inputs.use_github_hosted_runners && github.repository == 'openclaw/openclaw' && vars.OPENCLAW_CI_RUNNER_BACKEND == 'hybrid' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-24.04') }}
+    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(!inputs.use_github_hosted_runners && github.repository == 'ravionhq/openclaw' && vars.OPENCLAW_CI_RUNNER_BACKEND == 'hybrid' && 'ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true' || 'ubuntu-24.04'))) || (!inputs.use_github_hosted_runners && github.repository == 'ravionhq/openclaw' && vars.OPENCLAW_CI_RUNNER_BACKEND == 'hybrid' && 'ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true' || 'ubuntu-24.04') }}
     timeout-minutes: 15
     permissions:
       actions: read
@@ -3823,7 +3823,7 @@ jobs:
   prepare_live_test_image:
     needs: [validate_selected_ref, plan_release_workflow_matrices]
     if: inputs.include_live_suites && (inputs.live_suite_filter == '' || startsWith(inputs.live_suite_filter, 'live-') || startsWith(inputs.live_suite_filter, 'docker-live-models'))
-    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'blacksmith-32vcpu-ubuntu-2404'))) || (inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'blacksmith-32vcpu-ubuntu-2404') }}
+    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=32/memory=128/interruptible=true'))) || (inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=32/memory=128/interruptible=true') }}
     timeout-minutes: 60
     permissions:
       contents: read
@@ -3974,7 +3974,7 @@ jobs:
     name: Docker live models (${{ matrix.provider_label }})
     needs: [validate_selected_ref, prepare_live_test_image, plan_release_workflow_matrices]
     if: (!inputs.prepare_only) && inputs.include_live_suites && inputs.live_model_providers == '' && (inputs.live_suite_filter == '' || inputs.live_suite_filter == 'docker-live-models') && needs.plan_release_workflow_matrices.outputs.live_models_count != '0'
-    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'blacksmith-32vcpu-ubuntu-2404'))) || (inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'blacksmith-32vcpu-ubuntu-2404') }}
+    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=32/memory=128/interruptible=true'))) || (inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=32/memory=128/interruptible=true') }}
     timeout-minutes: 45
     strategy:
       fail-fast: false
@@ -4155,7 +4155,7 @@ jobs:
     name: Docker live models (selected providers)
     needs: [validate_selected_ref, prepare_live_test_image]
     if: (!inputs.prepare_only) && inputs.include_live_suites && inputs.live_model_providers != '' && (inputs.live_suite_filter == '' || inputs.live_suite_filter == 'docker-live-models')
-    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'blacksmith-32vcpu-ubuntu-2404'))) || (inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'blacksmith-32vcpu-ubuntu-2404') }}
+    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=32/memory=128/interruptible=true'))) || (inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=32/memory=128/interruptible=true') }}
     timeout-minutes: 45
     env:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -4360,7 +4360,7 @@ jobs:
     name: Native live suites (${{ matrix.label }})${{ inputs.test_runtime == 'bun' && ' (Bun advisory)' || '' }}
     needs: validate_selected_ref
     if: (!inputs.prepare_only) && inputs.include_live_suites && !inputs.live_models_only && (inputs.live_suite_filter == '' || (startsWith(inputs.live_suite_filter, 'native-live-') && !startsWith(inputs.live_suite_filter, 'native-live-extensions-media') && inputs.live_suite_filter != 'native-live-extensions-a-k'))
-    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'blacksmith-8vcpu-ubuntu-2404'))) || (inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'blacksmith-8vcpu-ubuntu-2404') }}
+    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=8/memory=32/interruptible=true'))) || (inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=8/memory=32/interruptible=true') }}
     timeout-minutes: ${{ matrix.timeout_minutes }}
     strategy:
       fail-fast: false
@@ -4723,7 +4723,7 @@ jobs:
     name: Docker live suites (${{ matrix.label }})
     needs: [validate_selected_ref, prepare_live_test_image, plan_release_workflow_matrices]
     if: (!inputs.prepare_only) && needs.plan_release_workflow_matrices.outputs.live_docker_count != '0'
-    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'blacksmith-32vcpu-ubuntu-2404'))) || (inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'blacksmith-32vcpu-ubuntu-2404') }}
+    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=32/memory=128/interruptible=true'))) || (inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=32/memory=128/interruptible=true') }}
     timeout-minutes: ${{ matrix.timeout_minutes }}
     strategy:
       fail-fast: false
@@ -4913,7 +4913,7 @@ jobs:
     name: Live media suites (${{ matrix.label }})${{ inputs.test_runtime == 'bun' && ' (Bun advisory)' || '' }}
     needs: validate_selected_ref
     if: (!inputs.prepare_only) && inputs.include_live_suites && !inputs.live_models_only && (inputs.live_suite_filter == '' || startsWith(inputs.live_suite_filter, 'native-live-extensions-media') || inputs.live_suite_filter == 'native-live-extensions-a-k')
-    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'blacksmith-8vcpu-ubuntu-2404'))) || (inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'blacksmith-8vcpu-ubuntu-2404') }}
+    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=8/memory=32/interruptible=true'))) || (inputs.use_github_hosted_runners && 'ubuntu-24.04' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=8/memory=32/interruptible=true') }}
     container:
       image: ghcr.io/openclaw/openclaw-live-media-runner:ubuntu-24.04
       credentials:
