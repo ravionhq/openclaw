@@ -290,9 +290,9 @@ const EXCLUDED_PROJECT_CONFIGS = new Set([
   // checks-ui owns the Chromium project; Node stripes retain Node-driven Playwright tests.
   "test/vitest/vitest.ui-browser.config.ts",
 ]);
-const DEFAULT_NODE_TEST_RUNNER = "blacksmith-8vcpu-ubuntu-2404";
-const BUNDLED_NODE_TEST_RUNNER = "blacksmith-4vcpu-ubuntu-2404";
-const EXTRA_LARGE_NODE_TEST_RUNNER = "blacksmith-32vcpu-ubuntu-2404";
+const DEFAULT_NODE_TEST_RUNNER = "ravion/ee=openclaw-bench/type=sandbox/cpu=8/memory=32/interruptible=true";
+const BUNDLED_NODE_TEST_RUNNER = "ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true";
+const EXTRA_LARGE_NODE_TEST_RUNNER = "ravion/ee=openclaw-bench/type=sandbox/cpu=32/memory=128/interruptible=true";
 // Startup-core transforms the broad gateway graph before its assertions run.
 // Keep enough CPU here to avoid spending minutes in Vitest imports on 4 vCPU.
 const GATEWAY_STARTUP_CORE_RUNNER = DEFAULT_NODE_TEST_RUNNER;
@@ -2295,7 +2295,7 @@ function createInfraSplitShards(): NodeTestSplitShard[] {
       configs: ["test/vitest/vitest.infra.config.ts"],
       includePatterns: groups.get(shardName) ?? [],
       requiresDist: false,
-      runner: "blacksmith-4vcpu-ubuntu-2404",
+      runner: "ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true",
       shardName,
     }))
     .filter((shard) => shard.includePatterns.length > 0);
@@ -2523,7 +2523,7 @@ const TUI_PTY_NODE_TEST_SHARD: NodeTestSplitShard = {
     OPENCLAW_TUI_PTY_USE_BUILT_CLI: "1",
   },
   requiresDist: true,
-  runner: "blacksmith-4vcpu-ubuntu-2404",
+  runner: "ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true",
 };
 const AGENTS_EMBEDDED_NODE_TEST_SHARD: NodeTestSplitShard = {
   shardName: "agentic-agents-embedded",
@@ -2554,14 +2554,14 @@ const SPLIT_NODE_SHARDS = new Map<string, NodeTestSplitShard[] | (() => NodeTest
         shardName: "core-runtime-hooks",
         configs: ["test/vitest/vitest.hooks.config.ts"],
         requiresDist: false,
-        runner: "blacksmith-4vcpu-ubuntu-2404",
+        runner: "ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true",
       },
       ...createInfraSplitShards(),
       {
         shardName: "core-runtime-secrets",
         configs: ["test/vitest/vitest.secrets.config.ts"],
         requiresDist: false,
-        runner: "blacksmith-4vcpu-ubuntu-2404",
+        runner: "ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true",
       },
       // runtime-config owns ~90% of the former three-config wall; keeping it
       // separate lets the hosted splitter stripe it while logging/process
@@ -2577,13 +2577,13 @@ const SPLIT_NODE_SHARDS = new Map<string, NodeTestSplitShard[] | (() => NodeTest
           }),
         ),
         requiresDist: false,
-        runner: "blacksmith-4vcpu-ubuntu-2404",
+        runner: "ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true",
       },
       {
         shardName: "core-runtime-config",
         configs: ["test/vitest/vitest.runtime-config.config.ts"],
         requiresDist: false,
-        runner: "blacksmith-4vcpu-ubuntu-2404",
+        runner: "ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true",
       },
       TUI_PTY_NODE_TEST_SHARD,
       ...createCoreRuntimeMediaUiSplitShards(),
