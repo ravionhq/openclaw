@@ -39,7 +39,7 @@ concurrency:
 jobs:
   dispatch:
     name: Dispatch selected Mantis workflow
-    runs-on: blacksmith-8vcpu-ubuntu-2404
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=8/memory=32/interruptible=true
     steps:
       - name: Dispatch scenario
         env:
