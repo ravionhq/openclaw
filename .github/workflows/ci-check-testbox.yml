@@ -62,7 +62,7 @@ env:
 jobs:
   admission:
     if: github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-24.04
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
     timeout-minutes: 3
     permissions:
       contents: read
@@ -98,7 +98,7 @@ jobs:
       contents: read
     name: "check"
     # Pull requests only validate the hydration steps; real Testbox leases arrive via dispatch.
-    runs-on: ${{ github.event_name == 'pull_request' && 'ubuntu-24.04' || needs.admission.outputs.runner }}
+    runs-on: ${{ github.event_name == 'pull_request' && 'ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true' || needs.admission.outputs.runner }}
     timeout-minutes: ${{ fromJSON(needs.admission.outputs.minutes || '60') }}
     steps:
       # Testbox lifecycle actions require Blacksmith VM metadata; PRs validate our setup steps only.

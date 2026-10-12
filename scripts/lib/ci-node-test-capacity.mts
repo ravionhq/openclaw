@@ -1,8 +1,11 @@
 import type { CompactNodeTestShard } from "./ci-node-test-plan.mts";
 
-export const DEFAULT_NODE_TEST_RUNNER = "blacksmith-8vcpu-ubuntu-2404";
-export const BUNDLED_NODE_TEST_RUNNER = "blacksmith-4vcpu-ubuntu-2404";
-export const EXTRA_LARGE_NODE_TEST_RUNNER = "blacksmith-32vcpu-ubuntu-2404";
+export const DEFAULT_NODE_TEST_RUNNER =
+  "ravion/ee=openclaw-bench/type=sandbox/cpu=8/memory=32/interruptible=true";
+export const BUNDLED_NODE_TEST_RUNNER =
+  "ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true";
+export const EXTRA_LARGE_NODE_TEST_RUNNER =
+  "ravion/ee=openclaw-bench/type=sandbox/cpu=32/memory=128/interruptible=true";
 export const TOOLING_CONFIG = "test/vitest/vitest.tooling.config.ts";
 export const TOOLING_LARGE_CAPACITY_TEST_FILES = new Set([
   // Generation-retention cases require eight CPUs / 24 GiB; the two-CPU
@@ -42,7 +45,7 @@ export function resolveCompactNodeTestRunner(
   usesNativeCapacity: boolean,
 ) {
   if (canUseSerialTooling16Runner(job, runnerBackend)) {
-    return "blacksmith-16vcpu-ubuntu-2404";
+    return "ravion/ee=openclaw-bench/type=sandbox/cpu=16/memory=64/interruptible=true";
   }
   // The 4/8 classes both deliver two CPUs. Keep the original placement anchors.
   return usesNativeCapacity && job.runner === BUNDLED_NODE_TEST_RUNNER

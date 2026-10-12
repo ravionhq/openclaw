@@ -204,7 +204,8 @@ export function hasUiE2eAffectingChange(
   );
 }
 
-const DEFAULT_NODE_TEST_RUNNER = "blacksmith-8vcpu-ubuntu-2404";
+const DEFAULT_NODE_TEST_RUNNER =
+  "ravion/ee=openclaw-bench/type=sandbox/cpu=8/memory=32/interruptible=true";
 // Each target runs in its own child process (isolation contract), so bound the
 // serial tail per job; the shard runner overlaps two children at a time.
 const CHANGED_NODE_TEST_TARGETS_PER_JOB = 12;
