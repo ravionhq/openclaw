@@ -379,11 +379,11 @@ function verifyMatrixCancellation(context, cancellation, members) {
   // Historical runs retain the cancellation policy from their tested workflow.
   const historicalAttemptAware =
     failFast ===
-    "${{ github.event_name == 'pull_request' && (github.run_attempt != 1 || github.repository != 'openclaw/openclaw') }}";
+    "${{ github.event_name == 'pull_request' && (github.run_attempt != 1 || github.repository != 'ravionhq/openclaw') }}";
   const scopedFailFast =
     (historicalAttemptAware ||
       failFast ===
-        "${{ github.event_name == 'pull_request' && github.repository != 'openclaw/openclaw' }}") &&
+        "${{ github.event_name == 'pull_request' && github.repository != 'ravionhq/openclaw' }}") &&
     positiveInteger(run.run_attempt) &&
     typeof repository === "string" &&
     /^[A-Za-z0-9-]+\/[A-Za-z0-9_.-]+$/u.test(repository) &&

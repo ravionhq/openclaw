@@ -32,13 +32,13 @@ jobs:
   release:
     name: Prepare and upload Android release
     if: >-
-      github.ref == 'refs/heads/main' && github.repository == 'openclaw/openclaw' &&
+      github.ref == 'refs/heads/main' && github.repository == 'ravionhq/openclaw' &&
       ((github.event_name == 'schedule' && vars.ANDROID_INTERNAL_ENABLED == 'true') ||
       (github.event_name == 'workflow_dispatch' &&
       (inputs.operation == 'release' || inputs.operation == 'internal')))
     permissions:
       contents: write
-    runs-on: ubuntu-24.04
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
     timeout-minutes: 120
     environment: ${{ (github.event_name == 'schedule' || inputs.operation == 'internal') && 'android-internal' || 'android-store-release' }}
     steps:
