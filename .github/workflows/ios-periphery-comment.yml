@@ -17,10 +17,10 @@ permissions:
 jobs:
   comment:
     name: Comment on PR
-    runs-on: ubuntu-24.04
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
     if: >
       (
-      github.repository == 'openclaw/openclaw' &&
+      github.repository == 'ravionhq/openclaw' &&
       github.event.workflow_run.event == 'pull_request' &&
       (github.event.workflow_run.name == 'iOS Periphery Dead Code' ||
       github.event.workflow_run.name == 'macOS Periphery Dead Code')
