@@ -20,7 +20,7 @@ export function runtimePlacementTimingIdentity(
 }
 
 export const NATIVE_SOLO_TIMING_PROFILE = {
-  runner: "ravion/ee=openclaw-bench/type=sandbox/cpu=32/memory=128/interruptible=true",
+  runner: "blacksmith-32vcpu-ubuntu-2404",
   logicalCpuCount: 8,
   minTotalMemoryBytes: 28 * 1024 ** 3,
   maxTotalMemoryBytes: 32 * 1024 ** 3,
