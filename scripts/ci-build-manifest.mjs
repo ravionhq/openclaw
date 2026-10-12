@@ -154,7 +154,7 @@ const outputPath = process.env.GITHUB_OUTPUT;
 const packageJson = JSON.parse(readFileSync("package.json", "utf8"));
 const packageScripts = packageJson.scripts ?? {};
 const hasPackageScript = (name) => typeof packageScripts[name] === "string";
-const isCanonicalRepository = process.env.OPENCLAW_CI_REPOSITORY === "openclaw/openclaw";
+const isCanonicalRepository = process.env.OPENCLAW_CI_REPOSITORY === "ravionhq/openclaw";
 const changedPaths = (() => {
   try {
     const manifestPath = process.env.OPENCLAW_CI_CHANGED_PATHS_FILE;
@@ -972,7 +972,7 @@ if (
   }
   // One dispatch compares the same child contracts and worker ceiling.
   for (const [provider, runner] of [
-    ["blacksmith", "ravion/ee=openclaw-bench/type=sandbox/cpu=32/memory=128/interruptible=true"],
+    ["blacksmith", "blacksmith-32vcpu-ubuntu-2404"],
     ["github", "ubuntu-24.04"],
   ]) {
     rawNodeTestShards.push({
@@ -1227,13 +1227,13 @@ const additionalChecks = [
   {
     check_name: "check-additional-boundaries",
     group: "boundaries",
-    runner: "ravion/ee=openclaw-bench/type=sandbox/cpu=8/memory=32/interruptible=true",
+    runner: "blacksmith-8vcpu-ubuntu-2404",
   },
   // Prompt regeneration loads the full tool/prompt import graph independently.
   {
     check_name: "check-prompt-snapshots",
     group: "prompt-snapshots",
-    runner: "ravion/ee=openclaw-bench/type=sandbox/cpu=8/memory=32/interruptible=true",
+    runner: "blacksmith-8vcpu-ubuntu-2404",
   },
   // Frozen targets retain their original rows and command boundaries.
   ...(frozenTarget
@@ -1242,7 +1242,7 @@ const additionalChecks = [
   ).map((group) => ({
     check_name: `check-${group}`,
     group,
-    runner: "ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true",
+    runner: "blacksmith-4vcpu-ubuntu-2404",
   })),
   // Only dispatches execute this report; scheduled tips have no change range.
   ...(eventName === "workflow_dispatch"
@@ -1251,7 +1251,7 @@ const additionalChecks = [
         {
           check_name: "report-plugin-sdk-api-diff",
           group: "plugin-sdk-api-diff",
-          runner: "ravion/ee=openclaw-bench/type=sandbox/cpu=8/memory=32/interruptible=true",
+          runner: "blacksmith-8vcpu-ubuntu-2404",
         },
       ]
     : []),
@@ -1259,12 +1259,12 @@ const additionalChecks = [
   {
     check_name: "check-additional-extension-package-boundary",
     group: "extension-package-boundary",
-    runner: "ravion/ee=openclaw-bench/type=sandbox/cpu=32/memory=128/interruptible=true",
+    runner: "blacksmith-32vcpu-ubuntu-2404",
   },
   {
     check_name: "check-additional-runtime-topology-architecture",
     group: "runtime-topology-architecture",
-    runner: "ravion/ee=openclaw-bench/type=sandbox/cpu=16/memory=64/interruptible=true",
+    runner: "blacksmith-16vcpu-ubuntu-2404",
   },
 ].filter(
   ({ group }) =>
@@ -1301,12 +1301,12 @@ const checkTasks = [
   ...["guards", "npm-lock", "bundled-channel-config-metadata", "prod-types"].map((task) => ({
     check_name: `check-${task}`,
     task,
-    runner: "ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true",
+    runner: "blacksmith-4vcpu-ubuntu-2404",
   })),
   ...["lint", "dependencies", "test-types"].map((task) => ({
     check_name: `check-${task}`,
     task,
-    runner: "ravion/ee=openclaw-bench/type=sandbox/cpu=16/memory=64/interruptible=true",
+    runner: "blacksmith-16vcpu-ubuntu-2404",
   })),
 ].filter((row) => {
   if (ordinaryPullRequest && row.task === "dependencies") {
