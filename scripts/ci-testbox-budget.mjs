@@ -4,25 +4,16 @@ import { appendFileSync, readFileSync, writeFileSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 
 const PROFILES = {
-  check: {
-    runner: "ravion/ee=openclaw-bench/type=sandbox/cpu=16/memory=64/interruptible=true",
-    minutes: 240,
-  },
-  "check-memory": {
-    runner: "ravion/ee=openclaw-bench/type=sandbox/cpu=32/memory=128/interruptible=true",
-    minutes: 240,
-  },
-  arm: {
-    runner: "ravion/ee=openclaw-bench/type=sandbox/cpu=16/memory=64/interruptible=true",
-    minutes: 120,
-  },
-  build: {
-    runner: "ravion/ee=openclaw-bench/type=sandbox/cpu=16/memory=64/interruptible=true",
-    minutes: 35,
-  },
-  windows: { runner: "windows-2025", minutes: 75 },
+  check: { runner: "blacksmith-16vcpu-ubuntu-2404", minutes: 240 },
+  "check-memory": { runner: "blacksmith-32vcpu-ubuntu-2404", minutes: 240 },
+  arm: { runner: "blacksmith-16vcpu-ubuntu-2404-arm", minutes: 120 },
+  build: { runner: "blacksmith-16vcpu-ubuntu-2404", minutes: 35 },
+  windows: { runner: "blacksmith-16vcpu-windows-2025", minutes: 75 },
 };
-const WINDOWS_RUNNERS = new Set(["windows-2025", "windows-2025"]);
+const WINDOWS_RUNNERS = new Set([
+  "blacksmith-8vcpu-windows-2025",
+  "blacksmith-16vcpu-windows-2025",
+]);
 const ADMISSION_AGE_MS = 60 * 60_000;
 const CONCURRENT_LEASES = 32;
 const MAX_IDLE_MINUTES = 15;
