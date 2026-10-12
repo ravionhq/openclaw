@@ -2292,7 +2292,7 @@ function createInfraSplitShards(): NodeTestSplitShard[] {
       configs: ["test/vitest/vitest.infra.config.ts"],
       includePatterns: groups.get(shardName) ?? [],
       requiresDist: false,
-      runner: "blacksmith-4vcpu-ubuntu-2404",
+      runner: "ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true",
       shardName,
     }))
     .filter((shard) => shard.includePatterns.length > 0);
@@ -2520,7 +2520,7 @@ const TUI_PTY_NODE_TEST_SHARD: NodeTestSplitShard = {
     OPENCLAW_TUI_PTY_USE_BUILT_CLI: "1",
   },
   requiresDist: true,
-  runner: "blacksmith-4vcpu-ubuntu-2404",
+  runner: "ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true",
 };
 const AGENTS_EMBEDDED_NODE_TEST_SHARD: NodeTestSplitShard = {
   shardName: "agentic-agents-embedded",
@@ -2551,14 +2551,14 @@ const SPLIT_NODE_SHARDS = new Map<string, NodeTestSplitShard[] | (() => NodeTest
         shardName: "core-runtime-hooks",
         configs: ["test/vitest/vitest.hooks.config.ts"],
         requiresDist: false,
-        runner: "blacksmith-4vcpu-ubuntu-2404",
+        runner: "ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true",
       },
       ...createInfraSplitShards(),
       {
         shardName: "core-runtime-secrets",
         configs: ["test/vitest/vitest.secrets.config.ts"],
         requiresDist: false,
-        runner: "blacksmith-4vcpu-ubuntu-2404",
+        runner: "ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true",
       },
       // runtime-config owns ~90% of the former three-config wall; keeping it
       // separate lets the hosted splitter stripe it while logging/process
@@ -2574,13 +2574,13 @@ const SPLIT_NODE_SHARDS = new Map<string, NodeTestSplitShard[] | (() => NodeTest
           }),
         ),
         requiresDist: false,
-        runner: "blacksmith-4vcpu-ubuntu-2404",
+        runner: "ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true",
       },
       {
         shardName: "core-runtime-config",
         configs: ["test/vitest/vitest.runtime-config.config.ts"],
         requiresDist: false,
-        runner: "blacksmith-4vcpu-ubuntu-2404",
+        runner: "ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true",
       },
       TUI_PTY_NODE_TEST_SHARD,
       ...createCoreRuntimeMediaUiSplitShards(),
