@@ -24,7 +24,7 @@ on:
       runner:
         description: Runner used for request resolution
         required: false
-        default: ubuntu-24.04
+        default: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
         type: string
     secrets:
       MANTIS_GITHUB_APP_ID:
