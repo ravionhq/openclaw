@@ -24,8 +24,7 @@ type ChangedExtensionConfigShard = NodeTestShard & {
 };
 // Share runner setup while retaining each envelope's process and memory bounds.
 const CHANGED_EXTENSION_JOB_SECONDS = 300;
-const DEFAULT_NODE_TEST_RUNNER =
-  "ravion/ee=openclaw-bench/type=sandbox/cpu=8/memory=32/interruptible=true";
+const DEFAULT_NODE_TEST_RUNNER = "blacksmith-8vcpu-ubuntu-2404";
 
 export function resolveChangedExtensionRoots(changedPaths: string[]) {
   return [
