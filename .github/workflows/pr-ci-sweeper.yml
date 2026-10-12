@@ -26,10 +26,10 @@ permissions: {}
 
 jobs:
   sweep:
-    if: github.repository == 'openclaw/openclaw'
+    if: github.repository == 'ravionhq/openclaw'
     permissions:
       contents: read
-    runs-on: ubuntu-24.04
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:

@@ -10,11 +10,11 @@ on:
       runner_label:
         type: choice
         options:
-          - blacksmith-8vcpu-windows-2025
-          - blacksmith-16vcpu-windows-2025
+          - windows-2025
+          - windows-2025
         description: "Windows runner label"
         required: false
-        default: "blacksmith-16vcpu-windows-2025"
+        default: "windows-2025"
 
 permissions:
   contents: read
@@ -25,7 +25,7 @@ env:
 jobs:
   admission:
     if: github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-24.04
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
     timeout-minutes: 3
     permissions:
       contents: read
