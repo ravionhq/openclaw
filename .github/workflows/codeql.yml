@@ -59,7 +59,7 @@ permissions:
 jobs:
   security-high:
     name: Security High (${{ matrix.category }})
-    if: ${{ ((github.event_name != 'schedule' || github.repository == 'openclaw/openclaw') && (github.event_name != 'pull_request' || !github.event.pull_request.draft) && (github.event_name != 'workflow_dispatch' || inputs.profile == 'all' || inputs.profile == 'security')) }}
+    if: ${{ ((github.event_name != 'schedule' || github.repository == 'ravionhq/openclaw') && (github.event_name != 'pull_request' || !github.event.pull_request.draft) && (github.event_name != 'workflow_dispatch' || inputs.profile == 'all' || inputs.profile == 'security')) }}
     runs-on: ${{ matrix.runs_on }}
     timeout-minutes: ${{ matrix.timeout_minutes }}
     strategy:
@@ -68,37 +68,37 @@ jobs:
         include:
           - language: javascript-typescript
             category: core-auth-secrets
-            runs_on: ubuntu-24.04
+            runs_on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
             timeout_minutes: 25
             config_file: ./.github/codeql/codeql-core-auth-secrets-critical-security.yml
           - language: javascript-typescript
             category: channel-runtime-boundary
-            runs_on: ubuntu-24.04
+            runs_on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
             timeout_minutes: 25
             config_file: ./.github/codeql/codeql-channel-runtime-boundary-critical-security.yml
           - language: javascript-typescript
             category: network-ssrf-boundary
-            runs_on: ubuntu-24.04
+            runs_on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
             timeout_minutes: 25
             config_file: ./.github/codeql/codeql-network-ssrf-boundary-critical-security.yml
           - language: javascript-typescript
             category: mcp-process-tool-boundary
-            runs_on: ubuntu-24.04
+            runs_on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
             timeout_minutes: 25
             config_file: ./.github/codeql/codeql-mcp-process-tool-boundary-critical-security.yml
           - language: javascript-typescript
             category: process-exec-boundary
-            runs_on: ubuntu-24.04
+            runs_on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
             timeout_minutes: 25
             config_file: ./.github/codeql/codeql-process-exec-boundary-critical-security.yml
           - language: javascript-typescript
             category: plugin-trust-boundary
-            runs_on: ubuntu-24.04
+            runs_on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
             timeout_minutes: 25
             config_file: ./.github/codeql/codeql-plugin-trust-boundary-critical-security.yml
           - language: actions
             category: actions
-            runs_on: ubuntu-24.04
+            runs_on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
             timeout_minutes: 10
             config_file: ./.github/codeql/codeql-actions-critical-security.yml
     steps:

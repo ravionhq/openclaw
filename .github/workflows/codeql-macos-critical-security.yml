@@ -20,8 +20,8 @@ permissions:
 jobs:
   prepare-mermaid:
     name: Prepare Mermaid assets
-    if: (github.event_name != 'schedule' || github.repository == 'openclaw/openclaw')
-    runs-on: ubuntu-24.04
+    if: (github.event_name != 'schedule' || github.repository == 'ravionhq/openclaw')
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
     timeout-minutes: 10
     permissions:
       contents: read
