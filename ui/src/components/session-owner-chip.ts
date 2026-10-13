@@ -155,7 +155,9 @@ class SessionOwnerChip extends OpenClawLightDomElement {
         aria-label=${accessibleLabel}
         title=${accessibleLabel}
         >${
-          owner.identity?.type === "agent" || avatar.kind === "profile"
+          owner.identity?.type === "agent" ||
+          owner.identity?.type === "profile" ||
+          avatar.kind === "profile"
             ? renderSessionOwnerAvatar({ ...owner, id: owner.id })
             : html`<span class="session-owner-chip__initials">${initials}</span>`
         }</span
