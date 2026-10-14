@@ -34,7 +34,7 @@ concurrency:
 jobs:
   delete:
     if: github.repository == 'ravionhq/openclaw' && github.ref == 'refs/heads/main' && inputs.confirm
-    runs-on: ${{ inputs.architecture == 'arm64' && 'ravion/ee=openclaw-bench/type=sandbox/cpu=16/memory=64/interruptible=true' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true' }}
+    runs-on: ${{ inputs.architecture == 'arm64' && format('ravion/ee=openclaw-bench/type=sandbox/cpu=16/memory=64/interruptible=true/id={0}-{1}-{2}-{3}', github.run_id, github.run_attempt, github.job, strategy.job-index || 0) || format('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true/id={0}-{1}-{2}-{3}', github.run_id, github.run_attempt, github.job, strategy.job-index || 0) }}
     timeout-minutes: 10
     steps:
       - name: Checkout protected manifest

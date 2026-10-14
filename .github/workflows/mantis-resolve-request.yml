@@ -53,7 +53,7 @@ env:
 jobs:
   resolve:
     name: Resolve Mantis request
-    runs-on: ${{ inputs.runner }}
+    runs-on: ${{ (startsWith(inputs.runner, 'ravion/') && format('{0}/id={1}-{2}-{3}-{4}', inputs.runner, github.run_id, github.run_attempt, github.job, strategy.job-index || 0) || inputs.runner) }}
     outputs:
       baseline_ref: ${{ steps.resolve.outputs.baseline_ref }}
       candidate_ref: ${{ steps.resolve.outputs.candidate_ref }}

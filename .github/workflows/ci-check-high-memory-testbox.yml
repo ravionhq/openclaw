@@ -25,7 +25,7 @@ env:
 
 jobs:
   admission:
-    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true/id=${{ github.run_id }}-${{ github.run_attempt }}-${{ github.job }}-${{ strategy.job-index || 0 }}
     timeout-minutes: 3
     permissions:
       contents: read
@@ -60,7 +60,7 @@ jobs:
     permissions:
       contents: read
     name: "check"
-    runs-on: ${{ needs.admission.outputs.runner }}
+    runs-on: ${{ (startsWith(needs.admission.outputs.runner, 'ravion/') && format('{0}/id={1}-{2}-{3}-{4}', needs.admission.outputs.runner, github.run_id, github.run_attempt, github.job, strategy.job-index || 0) || needs.admission.outputs.runner) }}
     timeout-minutes: ${{ fromJSON(needs.admission.outputs.minutes || '240') }}
     steps:
       - name: Begin Testbox

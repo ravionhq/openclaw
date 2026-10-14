@@ -42,7 +42,7 @@ jobs:
   scan:
     name: Scan changed paths (precise)
     if: ${{ !github.event.pull_request.draft }}
-    runs-on: ${{ vars.OPENCLAW_CI_RUNNER_BACKEND == 'github' && 'ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true' || github.event.pull_request.head.repo.full_name == 'ravionhq/openclaw' && 'ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true' }}
+    runs-on: ${{ vars.OPENCLAW_CI_RUNNER_BACKEND == 'github' && format('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true/id={0}-{1}-{2}-{3}', github.run_id, github.run_attempt, github.job, strategy.job-index || 0) || github.event.pull_request.head.repo.full_name == 'ravionhq/openclaw' && format('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true/id={0}-{1}-{2}-{3}', github.run_id, github.run_attempt, github.job, strategy.job-index || 0) || format('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true/id={0}-{1}-{2}-{3}', github.run_id, github.run_attempt, github.job, strategy.job-index || 0) }}
     timeout-minutes: 30
     steps:
       - name: Checkout

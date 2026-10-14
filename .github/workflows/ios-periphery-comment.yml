@@ -17,7 +17,7 @@ permissions:
 jobs:
   comment:
     name: Comment on PR
-    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true/id=${{ github.run_id }}-${{ github.run_attempt }}-${{ github.job }}-${{ strategy.job-index || 0 }}
     if: >
       (
       github.repository == 'ravionhq/openclaw' &&

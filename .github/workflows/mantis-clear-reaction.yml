@@ -23,7 +23,7 @@ env:
 jobs:
   clear:
     name: Clear Mantis command reaction
-    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true/id=${{ github.run_id }}-${{ github.run_attempt }}-${{ github.job }}-${{ strategy.job-index || 0 }}
     permissions: {}
     steps:
       - name: Create Mantis cleanup GitHub App token

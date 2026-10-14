@@ -60,7 +60,7 @@ jobs:
   security-high:
     name: Security High (${{ matrix.category }})
     if: ${{ ((github.event_name != 'schedule' || github.repository == 'ravionhq/openclaw') && (github.event_name != 'pull_request' || !github.event.pull_request.draft) && (github.event_name != 'workflow_dispatch' || inputs.profile == 'all' || inputs.profile == 'security')) }}
-    runs-on: ${{ matrix.runs_on }}
+    runs-on: ${{ (startsWith(matrix.runs_on, 'ravion/') && format('{0}/id={1}-{2}-{3}-{4}', matrix.runs_on, github.run_id, github.run_attempt, github.job, strategy.job-index || 0) || matrix.runs_on) }}
     timeout-minutes: ${{ matrix.timeout_minutes }}
     strategy:
       fail-fast: false

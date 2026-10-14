@@ -38,7 +38,7 @@ jobs:
       (inputs.operation == 'release' || inputs.operation == 'internal')))
     permissions:
       contents: write
-    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true/id=${{ github.run_id }}-${{ github.run_attempt }}-${{ github.job }}-${{ strategy.job-index || 0 }}
     timeout-minutes: 120
     environment: ${{ (github.event_name == 'schedule' || inputs.operation == 'internal') && 'android-internal' || 'android-store-release' }}
     steps:

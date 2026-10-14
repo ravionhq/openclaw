@@ -91,7 +91,7 @@ jobs:
       native_package_id: ${{ steps.native_package_upload.outputs.artifact-id }}
       native_package_digest: ${{ steps.native_package_upload.outputs.artifact-digest }}
       native_manifest_sha256: ${{ steps.installed_package.outputs.native_manifest_sha256 }}
-    runs-on: ${{ inputs.runner_label }}
+    runs-on: ${{ (startsWith(inputs.runner_label, 'ravion/') && format('{0}/id={1}-{2}-{3}-{4}', inputs.runner_label, github.run_id, github.run_attempt, github.job, strategy.job-index || 0) || inputs.runner_label) }}
     timeout-minutes: 75
     permissions:
       contents: read

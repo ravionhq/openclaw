@@ -248,7 +248,7 @@ env:
 
 jobs:
   prepare:
-    runs-on: ${{ vars.OPENCLAW_RELEASE_RUNNER_GROUP != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(vars.OPENCLAW_RELEASE_RUNNER_GROUP), toJSON('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true'))) || ('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true') }}
+    runs-on: ${{ vars.OPENCLAW_RELEASE_RUNNER_GROUP != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(vars.OPENCLAW_RELEASE_RUNNER_GROUP), toJSON(format('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true/id={0}-{1}-{2}-{3}', github.run_id, github.run_attempt, github.job, strategy.job-index || 0)))) || (format('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true/id={0}-{1}-{2}-{3}', github.run_id, github.run_attempt, github.job, strategy.job-index || 0)) }}
     timeout-minutes: 90
     outputs:
       baseline_artifact_digest: ${{ steps.upload_baseline.outputs.artifact-digest }}
@@ -888,7 +888,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix: ${{ fromJson(needs.prepare.outputs.matrix) }}
-    runs-on: ${{ vars.OPENCLAW_RELEASE_RUNNER_GROUP != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(vars.OPENCLAW_RELEASE_RUNNER_GROUP), toJSON(matrix.runner))) || (matrix.runner) }}
+    runs-on: ${{ vars.OPENCLAW_RELEASE_RUNNER_GROUP != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(vars.OPENCLAW_RELEASE_RUNNER_GROUP), toJSON((startsWith(matrix.runner, 'ravion/') && format('{0}/id={1}-{2}-{3}-{4}', matrix.runner, github.run_id, github.run_attempt, github.job, strategy.job-index || 0) || matrix.runner)))) || ((startsWith(matrix.runner, 'ravion/') && format('{0}/id={1}-{2}-{3}-{4}', matrix.runner, github.run_id, github.run_attempt, github.job, strategy.job-index || 0) || matrix.runner)) }}
     # Windows upgrade can spend 45m installing the baseline, 42m updating, and
     # 45m on fallback installation. Leave room for setup and candidate runtime proof.
     timeout-minutes: ${{ matrix.os_id == 'windows' && matrix.suite == 'packaged-upgrade' && 180 || 60 }}

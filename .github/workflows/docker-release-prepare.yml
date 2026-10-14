@@ -55,7 +55,7 @@ env:
 
 jobs:
   resolve:
-    runs-on: ${{ vars.OPENCLAW_RELEASE_RUNNER_GROUP != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(vars.OPENCLAW_RELEASE_RUNNER_GROUP), toJSON('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true'))) || ('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true') }}
+    runs-on: ${{ vars.OPENCLAW_RELEASE_RUNNER_GROUP != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(vars.OPENCLAW_RELEASE_RUNNER_GROUP), toJSON(format('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true/id={0}-{1}-{2}-{3}', github.run_id, github.run_attempt, github.job, strategy.job-index || 0)))) || (format('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true/id={0}-{1}-{2}-{3}', github.run_id, github.run_attempt, github.job, strategy.job-index || 0)) }}
     outputs:
       version: ${{ steps.identity.outputs.version }}
       include_browser: ${{ steps.identity.outputs.include_browser }}
@@ -116,7 +116,7 @@ jobs:
   build:
     name: Prepare Docker images (${{ matrix.architecture }})
     needs: resolve
-    runs-on: ${{ vars.OPENCLAW_RELEASE_RUNNER_GROUP != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(vars.OPENCLAW_RELEASE_RUNNER_GROUP), toJSON(matrix.runner))) || (matrix.runner) }}
+    runs-on: ${{ vars.OPENCLAW_RELEASE_RUNNER_GROUP != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(vars.OPENCLAW_RELEASE_RUNNER_GROUP), toJSON((startsWith(matrix.runner, 'ravion/') && format('{0}/id={1}-{2}-{3}-{4}', matrix.runner, github.run_id, github.run_attempt, github.job, strategy.job-index || 0) || matrix.runner)))) || ((startsWith(matrix.runner, 'ravion/') && format('{0}/id={1}-{2}-{3}-{4}', matrix.runner, github.run_id, github.run_attempt, github.job, strategy.job-index || 0) || matrix.runner)) }}
     timeout-minutes: 60
     strategy:
       fail-fast: false
@@ -288,7 +288,7 @@ jobs:
   seal:
     name: Seal prepared Docker images
     needs: [resolve, build]
-    runs-on: ${{ vars.OPENCLAW_RELEASE_RUNNER_GROUP != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(vars.OPENCLAW_RELEASE_RUNNER_GROUP), toJSON('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true'))) || ('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true') }}
+    runs-on: ${{ vars.OPENCLAW_RELEASE_RUNNER_GROUP != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(vars.OPENCLAW_RELEASE_RUNNER_GROUP), toJSON(format('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true/id={0}-{1}-{2}-{3}', github.run_id, github.run_attempt, github.job, strategy.job-index || 0)))) || (format('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true/id={0}-{1}-{2}-{3}', github.run_id, github.run_attempt, github.job, strategy.job-index || 0)) }}
     permissions:
       actions: read
       contents: read

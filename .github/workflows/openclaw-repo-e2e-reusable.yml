@@ -62,7 +62,7 @@ env:
 jobs:
   build:
     name: Build repo E2E (${{ inputs.build_profile }})
-    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(inputs.use_github_hosted_runners && 'ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=32/memory=128/interruptible=true'))) || (inputs.use_github_hosted_runners && 'ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=32/memory=128/interruptible=true') }}
+    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(inputs.use_github_hosted_runners && format('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true/id={0}-{1}-{2}-{3}', github.run_id, github.run_attempt, github.job, strategy.job-index || 0) || format('ravion/ee=openclaw-bench/type=sandbox/cpu=32/memory=128/interruptible=true/id={0}-{1}-{2}-{3}', github.run_id, github.run_attempt, github.job, strategy.job-index || 0)))) || (inputs.use_github_hosted_runners && format('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true/id={0}-{1}-{2}-{3}', github.run_id, github.run_attempt, github.job, strategy.job-index || 0) || format('ravion/ee=openclaw-bench/type=sandbox/cpu=32/memory=128/interruptible=true/id={0}-{1}-{2}-{3}', github.run_id, github.run_attempt, github.job, strategy.job-index || 0)) }}
     timeout-minutes: 90
     outputs:
       artifact_id: ${{ steps.upload.outputs.artifact-id }}
@@ -126,7 +126,7 @@ jobs:
   test:
     name: Repo E2E (${{ matrix.name }})${{ inputs.test_runtime == 'bun' && ' (Bun advisory)' || '' }}
     needs: build
-    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(inputs.use_github_hosted_runners && 'ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=32/memory=128/interruptible=true'))) || (inputs.use_github_hosted_runners && 'ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=32/memory=128/interruptible=true') }}
+    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(inputs.use_github_hosted_runners && format('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true/id={0}-{1}-{2}-{3}', github.run_id, github.run_attempt, github.job, strategy.job-index || 0) || format('ravion/ee=openclaw-bench/type=sandbox/cpu=32/memory=128/interruptible=true/id={0}-{1}-{2}-{3}', github.run_id, github.run_attempt, github.job, strategy.job-index || 0)))) || (inputs.use_github_hosted_runners && format('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true/id={0}-{1}-{2}-{3}', github.run_id, github.run_attempt, github.job, strategy.job-index || 0) || format('ravion/ee=openclaw-bench/type=sandbox/cpu=32/memory=128/interruptible=true/id={0}-{1}-{2}-{3}', github.run_id, github.run_attempt, github.job, strategy.job-index || 0)) }}
     timeout-minutes: 90
     strategy:
       fail-fast: false

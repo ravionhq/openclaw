@@ -23,7 +23,7 @@ permissions:
 jobs:
   scope:
     name: Detect shared OpenClawKit scan scope
-    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true/id=${{ github.run_id }}-${{ github.run_attempt }}-${{ github.job }}-${{ strategy.job-index || 0 }}
     outputs:
       should-scan: ${{ steps.scope.outputs.should-scan }}
     steps:
@@ -300,7 +300,7 @@ jobs:
     name: Intersect shared OpenClawKit dead code
     needs: [scope, scan-ios, scan-macos]
     if: ${{ always() && needs.scope.outputs.should-scan == 'true' && needs.scan-ios.result != 'cancelled' && needs.scan-macos.result != 'cancelled' }}
-    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true/id=${{ github.run_id }}-${{ github.run_attempt }}-${{ github.job }}-${{ strategy.job-index || 0 }}
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1

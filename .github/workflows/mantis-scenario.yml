@@ -39,7 +39,7 @@ concurrency:
 jobs:
   dispatch:
     name: Dispatch selected Mantis workflow
-    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=8/memory=32/interruptible=true
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=8/memory=32/interruptible=true/id=${{ github.run_id }}-${{ github.run_attempt }}-${{ github.job }}-${{ strategy.job-index || 0 }}
     steps:
       - name: Dispatch scenario
         env:

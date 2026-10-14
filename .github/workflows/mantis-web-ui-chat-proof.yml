@@ -46,7 +46,7 @@ jobs:
           )
         )
       }}
-    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=8/memory=32/interruptible=true
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=8/memory=32/interruptible=true/id=${{ github.run_id }}-${{ github.run_attempt }}-${{ github.job }}-${{ strategy.job-index || 0 }}
     outputs:
       authorized: ${{ steps.permission.outputs.authorized }}
     steps:
@@ -97,7 +97,7 @@ jobs:
     name: Validate selected candidate
     needs: resolve_request
     if: ${{ needs.resolve_request.outputs.should_run == 'true' }}
-    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=8/memory=32/interruptible=true
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=8/memory=32/interruptible=true/id=${{ github.run_id }}-${{ github.run_attempt }}-${{ github.job }}-${{ strategy.job-index || 0 }}
     outputs:
       candidate_revision: ${{ steps.validate.outputs.candidate-revision }}
     steps:
@@ -121,7 +121,7 @@ jobs:
     if: ${{ needs.resolve_request.outputs.should_run == 'true' && inputs.request_id == '' }}
     permissions:
       contents: read
-    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=8/memory=32/interruptible=true
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=8/memory=32/interruptible=true/id=${{ github.run_id }}-${{ github.run_attempt }}-${{ github.job }}-${{ strategy.job-index || 0 }}
     timeout-minutes: 60
     outputs:
       artifact_name: ${{ steps.prepare_evidence.outputs.artifact_name }}
@@ -232,7 +232,7 @@ jobs:
     name: Bind requested PR and candidate
     needs: [resolve_request, validate_candidate]
     if: ${{ inputs.request_id != '' && needs.resolve_request.outputs.should_run == 'true' }}
-    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true/id=${{ github.run_id }}-${{ github.run_attempt }}-${{ github.job }}-${{ strategy.job-index || 0 }}
     steps:
       - name: Require an exact same-repository PR request
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
@@ -277,7 +277,7 @@ jobs:
   run_request_proof:
     name: Run request-bound web chat proof
     needs: [admit_bound_request, validate_candidate]
-    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=8/memory=32/interruptible=true
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=8/memory=32/interruptible=true/id=${{ github.run_id }}-${{ github.run_attempt }}-${{ github.job }}-${{ strategy.job-index || 0 }}
     timeout-minutes: 60
     permissions:
       contents: read
@@ -334,7 +334,7 @@ jobs:
     name: Finalize request-bound evidence
     needs: [admit_bound_request, run_request_proof, validate_candidate]
     if: ${{ always() && needs.admit_bound_request.result == 'success' }}
-    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true/id=${{ github.run_id }}-${{ github.run_attempt }}-${{ github.job }}-${{ strategy.job-index || 0 }}
     timeout-minutes: 15
     steps:
       - name: Checkout trusted finalizer
@@ -367,7 +367,7 @@ jobs:
     name: Publish Mantis web UI chat evidence
     needs: [resolve_request, run_web_ui_chat]
     if: ${{ always() && needs.resolve_request.outputs.pr_number != '' && needs.run_web_ui_chat.outputs.artifact_name != '' }}
-    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true/id=${{ github.run_id }}-${{ github.run_attempt }}-${{ github.job }}-${{ strategy.job-index || 0 }}
     environment: qa-live-shared
     steps:
       - name: Checkout harness ref

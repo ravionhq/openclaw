@@ -32,7 +32,7 @@ concurrency:
 
 jobs:
   sync-publish-repo:
-    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true/id=${{ github.run_id }}-${{ github.run_attempt }}-${{ github.job }}-${{ strategy.job-index || 0 }}
     env:
       OPENCLAW_DOCS_SYNC_TOKEN: ${{ secrets.OPENCLAW_DOCS_SYNC_TOKEN }}
       OPENCLAW_DOCS_MDX_CACHE: ${{ github.workspace }}/.artifacts/docs-mdx-cache.json

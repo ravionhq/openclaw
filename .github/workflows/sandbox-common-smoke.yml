@@ -36,7 +36,7 @@ env:
 jobs:
   sandbox-common-smoke:
     if: (github.event_name != 'schedule' || github.repository == 'ravionhq/openclaw') && (github.event_name != 'push' || github.ref != 'refs/heads/main' || vars.OPENCLAW_CI_ON_PUSH == 'true') && (github.event_name != 'pull_request' || !github.event.pull_request.draft)
-    runs-on: ${{ vars.OPENCLAW_CI_RUNNER_BACKEND == 'github' && 'ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true' || (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == 'ravionhq/openclaw') && 'ravion/ee=openclaw-bench/type=sandbox/cpu=16/memory=64/interruptible=true' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true' }}
+    runs-on: ${{ vars.OPENCLAW_CI_RUNNER_BACKEND == 'github' && format('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true/id={0}-{1}-{2}-{3}', github.run_id, github.run_attempt, github.job, strategy.job-index || 0) || (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == 'ravionhq/openclaw') && format('ravion/ee=openclaw-bench/type=sandbox/cpu=16/memory=64/interruptible=true/id={0}-{1}-{2}-{3}', github.run_id, github.run_attempt, github.job, strategy.job-index || 0) || format('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true/id={0}-{1}-{2}-{3}', github.run_id, github.run_attempt, github.job, strategy.job-index || 0) }}
     timeout-minutes: 45
     steps:
       - name: Checkout

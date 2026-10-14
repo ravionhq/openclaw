@@ -19,7 +19,7 @@ permissions:
 
 jobs:
   dispatch:
-    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true/id=${{ github.run_id }}-${{ github.run_attempt }}-${{ github.job }}-${{ strategy.job-index || 0 }}
     # id-token proves this repository, event, branch, and run to ClawSweeper's
     # direct queue intake. The job never checks out or executes pull request code.
     permissions:
