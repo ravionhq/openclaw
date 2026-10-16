@@ -8,6 +8,6 @@ on:
         default: ""
 jobs:
   cold:
-    runs-on: ravion/ee=devin-host-bench-20261009-ebe633/type=sandbox/cpu=2/memory=4
+    runs-on: ravion/ee=devin-host-bench-20261009-ebe633/type=sandbox/cpu=2/memory=4/id=${{ github.run_id }}-${{ github.run_attempt }}-cold-${{ strategy.job-index || 0 }}
     steps:
       - run: "true"
