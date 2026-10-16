@@ -1,0 +1,13 @@
+name: bench-cold-trivial
+run-name: bench-cold-trivial ${{ inputs.tag }}
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        required: false
+        default: ""
+jobs:
+  cold:
+    runs-on: ravion/ee=ee_3KT5Ujcdabzv7wT3qhEq4qrxV7o/type=sandbox/cpu=2/memory=4
+    steps:
+      - run: "true"
