@@ -1,0 +1,17 @@
+name: bench-cold-checkout
+run-name: bench-cold-checkout ${{ inputs.tag }}
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        required: false
+        default: ""
+jobs:
+  cold:
+    runs-on: ravion/ee=ee_3KT5Ujcdabzv7wT3qhEq4qrxV7o/type=sandbox/cpu=2/memory=4/disk_cache=auto
+    steps:
+      - run: "true"
+      - uses: actions/checkout@v4
+        with:
+          repository: ravionhq/handover-test
+      - run: du -sh . && ls
