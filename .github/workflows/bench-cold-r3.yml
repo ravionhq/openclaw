@@ -1,0 +1,14 @@
+name: bench-cold-r3
+run-name: bench-cold-r3 ${{ inputs.tag }}
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        required: true
+jobs:
+  cold:
+    timeout-minutes: 5
+    runs-on: ravion/ee=devin-host-bench-20261009-ebe633/type=sandbox/cpu=2/memory=4/id=${{ github.run_id }}-${{ github.run_attempt }}-cold-r3
+    steps:
+      - name: First user step
+        run: "true"
