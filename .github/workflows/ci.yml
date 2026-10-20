@@ -807,7 +807,10 @@ jobs:
                   run_git(workspace, "checkout-index", "--force", f"--prefix={harness}/", "--", *paths)
               else:
                   run_git(harness, "init", harness)
-                  run_git(harness, "remote", "add", "origin", remote)
+                  if "origin" in git_output(harness, "remote").split():
+                      run_git(harness, "remote", "set-url", "origin", remote)
+                  else:
+                      run_git(harness, "remote", "add", "origin", remote)
                   sparse_paths = ["/.github/actions/", *(f"/{path}" for path in node_setup_scripts)]
                   if kind in ("platform", "linux-node"):
                       sparse_paths += [f"/{path}" for path in evidence_scripts]
@@ -829,7 +832,7 @@ jobs:
               check_cancelled()
 
 
-          def checkout():
+          def checkout(attempt=1):
               check_cancelled()
               prerequisites = json.loads(os.environ.get("CHECKOUT_GIT_COMMITS_JSON", "null")) if kind == "linux-node" else None
               if prerequisites is None:
@@ -839,16 +842,24 @@ jobs:
                   for commit in prerequisites
               ):
                   raise ValueError("Invalid immutable test prerequisite commits")
-              if reset:
+              if reset or kind == "preflight":
                   os.makedirs(workspace, exist_ok=True)
                   # Every earlier Git group has been drained before deleting its workspace.
-                  subprocess.run(["find", workspace, "-mindepth", "1", "-maxdepth", "1",
+                  # A kept runner disk may hold .git from an earlier job; keep its objects on the
+                  # first attempt so the fetch is incremental, and drop its index and work tree.
+                  keep = ["!", "-name", ".git"] if attempt == 1 else []
+                  subprocess.run(["find", workspace, "-mindepth", "1", "-maxdepth", "1", *keep,
                                   "-exec", "rm", "-rf", "{}", "+"], check=True)
+                  if os.path.exists(os.path.join(workspace, ".git", "index")):
+                      os.remove(os.path.join(workspace, ".git", "index"))
               run_git(workspace, "init", workspace)
               if kind in ("linux-node", "android"):
                   run_git(workspace, "config", "--global", "--add", "safe.directory", workspace)
               run_git(workspace, "config", "gc.auto", "0")
-              run_git(workspace, "remote", "add", "origin", remote)
+              if "origin" in git_output(workspace, "remote").split():
+                  run_git(workspace, "remote", "set-url", "origin", remote)
+              else:
+                  run_git(workspace, "remote", "add", "origin", remote)
               if kind in ("preflight", "manual"):
                   checkout_selected_ref()
                   if kind == "preflight" and resolve_ref("HEAD") == os.environ["WORKFLOW_SHA"]:
@@ -918,7 +929,7 @@ jobs:
               try:
                   for attempt in range(1, 6 if reset else 2):
                       try:
-                          checkout()
+                          checkout(attempt)
                           if reset:
                               print(f"{label} attempt {attempt}/5 succeeded", flush=True)
                           if kind == "clawhub":
