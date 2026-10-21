@@ -35,7 +35,7 @@ function staticCheck(jobName, stepName, requireComplete = false) {
 }
 
 function client({ repository, token }) {
-  if (repository !== "openclaw/openclaw" || !token) {
+  if (repository !== "ravionhq/openclaw" || !token) {
     throw new Error("Invalid main CI evidence context");
   }
   return async (route, text = false) => {
