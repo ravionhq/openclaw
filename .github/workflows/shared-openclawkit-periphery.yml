@@ -83,7 +83,7 @@ jobs:
     name: Scan shared kit from iOS
     needs: scope
     if: ${{ needs.scope.outputs.should-scan == 'true' }}
-    runs-on: xcode-27
+    runs-on: ravion/ee=demo-ohio/type=sandbox/cpu=2/memory=8/disk_cache=auto/interruptible=true/id=${{ github.run_id }}-shared-openclawkit-periphery-scan-ios
     timeout-minutes: 45
     steps:
       - name: Checkout
@@ -209,7 +209,7 @@ jobs:
     name: Scan shared kit from macOS
     needs: scope
     if: ${{ needs.scope.outputs.should-scan == 'true' }}
-    runs-on: xcode-27
+    runs-on: ravion/ee=demo-ohio/type=sandbox/cpu=2/memory=8/disk_cache=auto/interruptible=true/id=${{ github.run_id }}-shared-openclawkit-periphery-scan-macos
     timeout-minutes: 45
     steps:
       - name: Checkout

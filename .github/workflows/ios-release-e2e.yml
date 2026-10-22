@@ -23,7 +23,7 @@ permissions:
 
 jobs:
   qualify:
-    runs-on: xcode-27-xlarge
+    runs-on: ravion/ee=demo-ohio/type=sandbox/cpu=2/memory=8/disk_cache=auto/interruptible=true/id=${{ github.run_id }}-ios-release-e2e-qualify
     timeout-minutes: 240
     env:
       TARGET_SHA: ${{ inputs.target_sha || github.sha }}

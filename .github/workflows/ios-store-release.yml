@@ -35,7 +35,7 @@ jobs:
     if: github.event_name == 'workflow_dispatch' && inputs.operation == 'screenshots' && github.repository == 'ravionhq/openclaw'
     permissions:
       contents: read
-    runs-on: xcode-27-xlarge
+    runs-on: ravion/ee=demo-ohio/type=sandbox/cpu=2/memory=8/disk_cache=auto/interruptible=true/id=${{ github.run_id }}-ios-store-release-screenshots
     timeout-minutes: 90
     steps:
       - name: Checkout screenshot source
@@ -128,7 +128,7 @@ jobs:
       (inputs.operation == 'testflight' || (inputs.operation == 'release' && needs.qualify.result == 'success'))))
     permissions:
       contents: write
-    runs-on: xcode-27-xlarge
+    runs-on: ravion/ee=demo-ohio/type=sandbox/cpu=8/memory=32/disk=20/disk_cache=auto/interruptible=false/id=${{ github.run_id }}-ios-store-release-release
     timeout-minutes: 360
     environment: ${{ (github.event_name == 'schedule' || inputs.operation == 'testflight') && 'ios-testflight' || 'ios-store-release' }}
     steps:
