@@ -50,7 +50,7 @@ concurrency:
 jobs:
   scope:
     if: github.event_name == 'schedule' && github.repository == 'ravionhq/openclaw'
-    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true
     outputs:
       changed: ${{ steps.scope.outputs.changed }}
     steps:
@@ -91,7 +91,7 @@ jobs:
     needs: scope
     name: Validate provider scaffold
     if: ${{ !cancelled() && (github.event_name != 'schedule' || needs.scope.outputs.changed == 'true') && (github.event_name != 'schedule' || github.repository == 'ravionhq/openclaw') && (github.event_name != 'push' || github.ref != 'refs/heads/main' || vars.OPENCLAW_CI_ON_PUSH == 'true') && (github.event_name != 'pull_request' || !github.event.pull_request.draft) }}
-    runs-on: ${{ vars.OPENCLAW_CI_RUNNER_BACKEND == 'github' && 'ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true' || (github.repository == 'ravionhq/openclaw' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == 'ravionhq/openclaw') && 'ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true') }}
+    runs-on: ${{ vars.OPENCLAW_CI_RUNNER_BACKEND == 'github' && 'ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true' || (github.repository == 'ravionhq/openclaw' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == 'ravionhq/openclaw') && 'ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true') }}
     timeout-minutes: 30
     steps:
       - name: Checkout

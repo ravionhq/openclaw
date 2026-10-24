@@ -37,7 +37,7 @@ jobs:
     outputs:
       release-commit: ${{ steps.release.outputs.commit }}
       guidance-main-sha: ${{ steps.release.outputs.guidance-main-sha }}
-    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true
     timeout-minutes: 30
     steps:
       - name: Checkout trusted main
@@ -141,7 +141,7 @@ jobs:
   publish:
     if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
     needs: analyze
-    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true
     timeout-minutes: 10
     steps:
       - name: Checkout trusted publisher

@@ -83,7 +83,7 @@ env:
 
 jobs:
   preview_plugins_clawhub:
-    runs-on: ${{ vars.OPENCLAW_RELEASE_RUNNER_GROUP != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(vars.OPENCLAW_RELEASE_RUNNER_GROUP), toJSON('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true'))) || ('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true') }}
+    runs-on: ${{ vars.OPENCLAW_RELEASE_RUNNER_GROUP != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(vars.OPENCLAW_RELEASE_RUNNER_GROUP), toJSON('ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true'))) || ('ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true') }}
     permissions:
       actions: read
       contents: read
@@ -504,7 +504,7 @@ jobs:
     name: Validate release publish approval
     needs: preview_plugins_clawhub
     if: github.event_name == 'workflow_dispatch' && needs.preview_plugins_clawhub.outputs.has_candidates == 'true'
-    runs-on: ${{ vars.OPENCLAW_RELEASE_RUNNER_GROUP != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(vars.OPENCLAW_RELEASE_RUNNER_GROUP), toJSON('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true'))) || ('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true') }}
+    runs-on: ${{ vars.OPENCLAW_RELEASE_RUNNER_GROUP != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(vars.OPENCLAW_RELEASE_RUNNER_GROUP), toJSON('ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true'))) || ('ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true') }}
     permissions:
       actions: read
       attestations: read
@@ -601,7 +601,7 @@ jobs:
     name: Pack ClawHub package (${{ matrix.plugin.packageName }})
     needs: [preview_plugins_clawhub, validate_release_publish_approval]
     if: github.event_name == 'workflow_dispatch' && needs.preview_plugins_clawhub.outputs.has_candidates == 'true'
-    runs-on: ${{ vars.OPENCLAW_RELEASE_RUNNER_GROUP != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(vars.OPENCLAW_RELEASE_RUNNER_GROUP), toJSON('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true'))) || ('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true') }}
+    runs-on: ${{ vars.OPENCLAW_RELEASE_RUNNER_GROUP != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(vars.OPENCLAW_RELEASE_RUNNER_GROUP), toJSON('ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true'))) || ('ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true') }}
     permissions:
       actions: read
       contents: read
@@ -726,7 +726,7 @@ jobs:
     name: Seal prepared ClawHub packages
     needs: [preview_plugins_clawhub, pack_plugins_clawhub_artifacts]
     if: always() && inputs.dry_run && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/release-publish/')) && needs.preview_plugins_clawhub.result == 'success' && (needs.pack_plugins_clawhub_artifacts.result == 'success' || needs.pack_plugins_clawhub_artifacts.result == 'skipped')
-    runs-on: ${{ vars.OPENCLAW_RELEASE_RUNNER_GROUP != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(vars.OPENCLAW_RELEASE_RUNNER_GROUP), toJSON('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true'))) || ('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true') }}
+    runs-on: ${{ vars.OPENCLAW_RELEASE_RUNNER_GROUP != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(vars.OPENCLAW_RELEASE_RUNNER_GROUP), toJSON('ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true'))) || ('ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true') }}
     permissions:
       actions: read
       contents: read
@@ -775,7 +775,7 @@ jobs:
     name: Seal ClawHub package transactions
     needs: [preview_plugins_clawhub, pack_plugins_clawhub_artifacts]
     if: github.event_name == 'workflow_dispatch' && inputs.dry_run != true && needs.preview_plugins_clawhub.outputs.has_candidates == 'true'
-    runs-on: ${{ vars.OPENCLAW_RELEASE_RUNNER_GROUP != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(vars.OPENCLAW_RELEASE_RUNNER_GROUP), toJSON('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true'))) || ('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true') }}
+    runs-on: ${{ vars.OPENCLAW_RELEASE_RUNNER_GROUP != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(vars.OPENCLAW_RELEASE_RUNNER_GROUP), toJSON('ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true'))) || ('ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true') }}
     permissions:
       actions: read
       contents: read
@@ -830,7 +830,7 @@ jobs:
         validate_release_publish_approval,
       ]
     if: always() && github.event_name == 'workflow_dispatch' && inputs.dry_run != true && needs.preview_plugins_clawhub.outputs.has_publish_candidates == 'true' && needs.validate_release_publish_approval.result == 'success' && needs.pack_plugins_clawhub_artifacts.result == 'success' && needs.seal_clawhub_transactions.result == 'success'
-    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true
     # A verified parent receipt replaces the human gate; direct dispatch keeps it.
     environment: ${{ needs.validate_release_publish_approval.outputs.parent_approval != 'receipt' && 'clawhub-plugin-release' || '' }}
     permissions:
@@ -924,7 +924,7 @@ jobs:
     name: Seal exact ClawHub recovery manifest
     needs: [seal_clawhub_transactions, publish_plugins_clawhub]
     if: ${{ always() && inputs.dry_run != true && needs.seal_clawhub_transactions.result == 'success' }}
-    runs-on: ${{ vars.OPENCLAW_RELEASE_RUNNER_GROUP != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(vars.OPENCLAW_RELEASE_RUNNER_GROUP), toJSON('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true'))) || ('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true') }}
+    runs-on: ${{ vars.OPENCLAW_RELEASE_RUNNER_GROUP != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(vars.OPENCLAW_RELEASE_RUNNER_GROUP), toJSON('ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true'))) || ('ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true') }}
     permissions:
       actions: read
       contents: read

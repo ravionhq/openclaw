@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   dispatch-translate:
-    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true
     env:
       GH_TOKEN: ${{ secrets.OPENCLAW_DOCS_SYNC_TOKEN }}
     steps:

@@ -95,7 +95,7 @@ env:
 
 jobs:
   validate_release_identity:
-    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true'))) || ('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true') }}
+    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON('ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true'))) || ('ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true') }}
     outputs:
       version: ${{ steps.identity.outputs.version }}
       include_browser: ${{ steps.identity.outputs.include_browser }}
@@ -188,7 +188,7 @@ jobs:
     if: ${{ !cancelled() && needs.validate_release_identity.result == 'success' && (needs.prepare.result == 'success' || needs.prepare.result == 'skipped') }}
     # An approval wait must not hold the global registry writer lock.
     # Docker Hub credentials remain required workflow_call secrets for publish.
-    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true
     environment: docker-release
     permissions: {}
     steps:
@@ -207,7 +207,7 @@ jobs:
     name: Publish prepared Docker images
     needs: [validate_release_identity, prepare, approve]
     if: ${{ !cancelled() && needs.validate_release_identity.result == 'success' && (needs.prepare.result == 'success' || needs.prepare.result == 'skipped') && needs.approve.result == 'success' }}
-    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true
     timeout-minutes: 45
     # The global lock covers every registry mutation and the alias read/write
     # checks. Preparation never queues behind a previous release's promotion.

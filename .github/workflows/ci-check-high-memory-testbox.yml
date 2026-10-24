@@ -25,7 +25,7 @@ env:
 
 jobs:
   admission:
-    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true
     timeout-minutes: 3
     permissions:
       contents: read

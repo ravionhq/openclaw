@@ -14,7 +14,7 @@ concurrency:
 jobs:
   refit:
     if: github.repository == 'ravionhq/openclaw' && github.ref == 'refs/heads/main'
-    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true
     timeout-minutes: 30
     permissions:
       contents: read

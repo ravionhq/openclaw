@@ -18,7 +18,7 @@ jobs:
     # New release-ci refs cannot read a sibling ref's cache. Scheduled main runs
     # publish portable npm downloads without executing package lifecycle hooks.
     if: ${{ github.repository == 'ravionhq/openclaw' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') }}
-    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true
     timeout-minutes: 20
     steps:
       - name: Setup Node.js

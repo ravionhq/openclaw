@@ -16,7 +16,7 @@ permissions:
 jobs:
   update:
     name: Published driver update
-    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true
     steps:
       - name: Start cell budget
         run: |

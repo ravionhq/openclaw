@@ -631,7 +631,7 @@ env:
 
 jobs:
   validate_selected_ref:
-    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(!inputs.use_github_hosted_runners && github.repository == 'ravionhq/openclaw' && vars.OPENCLAW_CI_RUNNER_BACKEND == 'hybrid' && 'ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true'))) || (!inputs.use_github_hosted_runners && github.repository == 'ravionhq/openclaw' && vars.OPENCLAW_CI_RUNNER_BACKEND == 'hybrid' && 'ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true') }}
+    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(!inputs.use_github_hosted_runners && github.repository == 'ravionhq/openclaw' && vars.OPENCLAW_CI_RUNNER_BACKEND == 'hybrid' && 'ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true'))) || (!inputs.use_github_hosted_runners && github.repository == 'ravionhq/openclaw' && vars.OPENCLAW_CI_RUNNER_BACKEND == 'hybrid' && 'ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true') }}
     timeout-minutes: 30
     outputs:
       test_bun_artifact_id: ${{ steps.test_bun_artifact.outputs.artifact-id }}
@@ -1201,7 +1201,7 @@ jobs:
 
   plan_release_workflow_matrices:
     needs: validate_selected_ref
-    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true'))) || ('ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true') }}
+    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON('ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true'))) || ('ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true') }}
     timeout-minutes: 10
     outputs:
       live_docker_count: ${{ steps.plan.outputs.live_docker_count }}
@@ -2050,7 +2050,7 @@ jobs:
   plan_docker_lane_groups:
     needs: validate_selected_ref
     if: (!inputs.prepare_only) && inputs.docker_lanes != ''
-    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(inputs.use_github_hosted_runners && 'ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true'))) || (inputs.use_github_hosted_runners && 'ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true') }}
+    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(inputs.use_github_hosted_runners && 'ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true'))) || (inputs.use_github_hosted_runners && 'ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true') }}
     timeout-minutes: 90
     outputs:
       groups_json: ${{ steps.groups.outputs.groups_json }}
@@ -3417,7 +3417,7 @@ jobs:
     name: Bind full release candidate evidence
     needs: [validate_selected_ref, prepare_docker_e2e_image]
     if: inputs.emit_candidate_evidence && needs.prepare_docker_e2e_image.result == 'success'
-    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(!inputs.use_github_hosted_runners && github.repository == 'ravionhq/openclaw' && vars.OPENCLAW_CI_RUNNER_BACKEND == 'hybrid' && 'ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true'))) || (!inputs.use_github_hosted_runners && github.repository == 'ravionhq/openclaw' && vars.OPENCLAW_CI_RUNNER_BACKEND == 'hybrid' && 'ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true') }}
+    runs-on: ${{ inputs.runner_group != '' && fromJSON(format('{{"group":{0},"labels":{1}}}', toJSON(inputs.runner_group), toJSON(!inputs.use_github_hosted_runners && github.repository == 'ravionhq/openclaw' && vars.OPENCLAW_CI_RUNNER_BACKEND == 'hybrid' && 'ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true'))) || (!inputs.use_github_hosted_runners && github.repository == 'ravionhq/openclaw' && vars.OPENCLAW_CI_RUNNER_BACKEND == 'hybrid' && 'ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true' || 'ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true') }}
     timeout-minutes: 15
     permissions:
       actions: read

@@ -22,7 +22,7 @@ env:
 jobs:
   build:
     name: Build live media runner image
-    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=8/memory=32/interruptible=true
+    runs-on: ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true
     timeout-minutes: 30
     steps:
       - name: Checkout
