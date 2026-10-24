@@ -8,6 +8,7 @@ self-hosted-runner:
     - xcode-27-xlarge
     # Blacksmith CI runners
     - ravion/ee=openclaw-bench/type=sandbox/cpu=4/memory=16/interruptible=true
+    - ravion/ee=openclaw-bench/type=sandbox/cpu=auto/memory=auto/disk=auto/interruptible=true
     - ravion/ee=openclaw-bench/type=sandbox/cpu=8/memory=32/interruptible=true
     - windows-2025
     - ravion/ee=openclaw-bench/type=sandbox/cpu=16/memory=64/interruptible=true
